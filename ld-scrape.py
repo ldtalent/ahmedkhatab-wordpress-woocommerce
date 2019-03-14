@@ -8,16 +8,15 @@ def _scrapeProduct(url):
     product = {}
     with requests.get(url,headers=hdr)  as page_response:
         soup = BeautifulSoup(page_response.content, 'lxml')
-        amount = soup.findAll("span",{"class": "woocommerce-Price-amount"})
-        addons = soup.findAll("div",{"class": "product-addon"})
+        amount = soup.findAll("div",{"id": "product-addons-total"})
         product_title= soup.findAll("h1",{"class": "product_title"})
-        description = soup.findAll("div",{"id": "content_show"})
+        description = soup.findAll("div",{"class": "content-text"})
         images = soup.findAll("div",{"class":"images"})[0].findAll("a")
     imgs = [i["href"] for i in images]
     product["Images"] = ",".join(imgs)
     product["Name"] = product_title[0].text
-    product["Price"] = amount[0].text
-    product["Description"] = description[0].text.replace("Fence Workshop","Aluminum Fence Contractor")
+    product["Price"] = amount[0]['data-price']
+    product["Description"] = description[0].text
     return product 
 
 data = [_scrapeProduct("https://fenceworkshop.com/product/athens-double-driveway-gate/")]
