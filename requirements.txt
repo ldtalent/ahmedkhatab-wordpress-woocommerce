@@ -8,7 +8,7 @@ dryscrape==1.0
 futures==3.2.0
 gganimeapi==0.0.4
 idna==2.8
-lxml==4.3.1
+lxml==4.6.5
 numpy==1.16.2
 Pillow==5.4.1
 req==1.0.0
